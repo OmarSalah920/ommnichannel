@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const fetchProfile = async (userId: string) => {
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .select('*')
         .eq('id', userId)
         .maybeSingle();
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const { error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .update({ status })
         .eq('id', user.id);
 
@@ -147,7 +147,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signUp = async (email: string, password: string, fullName: string, role: UserRole = 'agent') => {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -157,27 +157,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           },
         },
       });
-      if (error) {
-        return { error: error as Error };
-      }
-
-      if (data.user) {
-        const { error: profileError } = await supabase
-          .from('user_profiles')
-          .insert({
-            id: data.user.id,
-            email: data.user.email ?? email,
-            full_name: fullName,
-            role,
-            status: 'offline',
-          });
-
-        if (profileError) {
-          return { error: profileError as Error };
-        }
-      }
-
-      return { error: null };
+      return { error: error as Error | null };
     } catch (error) {
       return { error: error as Error };
     }
@@ -199,7 +179,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const { error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .update(updates)
         .eq('id', user.id);
 

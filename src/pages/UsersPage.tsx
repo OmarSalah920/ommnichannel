@@ -31,7 +31,7 @@ export function UsersPage() {
   }, []);
 
   const fetchUsers = async () => {
-    const { data, error } = await supabase.from('user_profiles').select('*').order('created_at', { ascending: false });
+    const { data, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: false });
 
     if (error) {
       console.error('Error fetching users:', error);
@@ -42,7 +42,7 @@ export function UsersPage() {
   };
 
   const handleUpdateRole = async (userId: string, newRole: UserRole) => {
-    const { error } = await supabase.from('user_profiles').update({ role: newRole }).eq('id', userId);
+    const { error } = await supabase.from('profiles').update({ role: newRole }).eq('id', userId);
 
     if (!error) {
       fetchUsers();

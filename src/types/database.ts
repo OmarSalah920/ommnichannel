@@ -10,7 +10,7 @@ export type ChannelType = 'whatsapp' | 'messenger' | 'instagram';
 export interface Database {
   public: {
     Tables: {
-      user_profiles: {
+      profiles: {
         Row: {
           id: string;
           email: string;
@@ -287,7 +287,7 @@ export interface Database {
   };
 }
 
-export type UserProfile = Database['public']['Tables']['user_profiles']['Row'];
+export type UserProfile = Database['public']['Tables']['profiles']['Row'];
 export type Team = Database['public']['Tables']['teams']['Row'];
 export type TeamMember = Database['public']['Tables']['team_members']['Row'];
 export type Channel = Database['public']['Tables']['channels']['Row'];
