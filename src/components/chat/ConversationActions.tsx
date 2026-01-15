@@ -55,7 +55,7 @@ export function ConversationActions({ conversation, onUpdate }: ConversationActi
 
   const fetchAgents = async () => {
     const { data } = await supabase
-      .from('profiles')
+      .from('user_profiles')
       .select('*')
       .in('role', ['agent', 'supervisor', 'admin'])
       .order('full_name');
