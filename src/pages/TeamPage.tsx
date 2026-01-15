@@ -29,7 +29,7 @@ export function TeamPage() {
 
   const fetchData = async () => {
     const [agentsResult, teamsResult] = await Promise.all([
-      supabase.from('user_profiles').select('*').order('full_name'),
+      supabase.from('profiles').select('*').order('full_name'),
       supabase.from('teams').select('*').order('name'),
     ]);
 
